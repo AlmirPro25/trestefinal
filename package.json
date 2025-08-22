@@ -1,0 +1,48 @@
+{
+  "name": "2copy-of-bank-endcopy-of-fz-pesquisa-melhor-of-bosca-imagem-com-o-gogle-copy-of-pegando-pesquisa-copy-of--saba-usar-mcp-copy-of-estavel-fábrica-1-scripite-faz-por-partes-na-mentes-da-ia",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "node scripts/deploy-vercel.js"
+  },
+  "dependencies": {
+    "@google/genai": "latest",
+    "@monaco-editor/react": "^4.6.0",
+    "@supabase/supabase-js": "^2.55.0",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "express-validator": "^7.2.1",
+    "file-saver": "2.0.5",
+    "immer": "^10.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "jszip": "3.10.1",
+    "marked": "^15.0.12",
+    "monaco-editor": "^0.52.2",
+    "morgan": "^1.10.0",
+    "path": "^0.12.7",
+    "prismjs": "^1.30.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-simple-code-editor": "^0.14.1",
+    "sequelize": "^6.37.7",
+    "url": "^0.11.4",
+    "uuid": "^9.0.1",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "terser": "^5.43.1",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}

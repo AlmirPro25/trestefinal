@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Web Weaver - Powered by Gemini</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Global base styles for the AI Web Weaver application itself */
+      body {
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; 
+        background-color: #0F172A; /* slate-900 */
+        --ai-preview-default-bg: #F9FAFB; /* Tailwind gray-50, for iframe default consistency */
+      }
+      #root {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+       /* Scrollbar styling for components within AI Web Weaver */
+      .media-candidates-scrollbar::-webkit-scrollbar,
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 8px; /* Consistent width */
+        height: 8px; /* Consistent height for horizontal */
+      }
+      .media-candidates-scrollbar::-webkit-scrollbar-track,
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: #1E293B; /* slate-800 */
+        border-radius: 10px;
+      }
+      .media-candidates-scrollbar::-webkit-scrollbar-thumb,
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: #334155; /* slate-700 */
+        border-radius: 10px;
+        border: 2px solid #1E293B; /* slate-800, to give padding effect */
+      }
+      .media-candidates-scrollbar::-webkit-scrollbar-thumb:hover,
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: #475569; /* slate-600 */
+      }
+
+      /* Interactive Debug Console Styles */
+      .preview-console {
+        transition: max-height 0.3s ease-in-out;
+      }
+      .log-item {
+        font-family: "Fira Mono", "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", Monaco, "Lucida Console", monospace;
+      }
+      .log-item.log-level-error {
+        color: #F87171; /* red-400 */
+        background-color: rgba(239, 68, 68, 0.05);
+        border-left-color: #EF4444; /* red-500 */
+      }
+       .log-item.log-level-warn {
+        color: #FBBF24; /* amber-400 */
+        background-color: rgba(251, 191, 36, 0.05);
+        border-left-color: #F59E0B; /* amber-500 */
+      }
+      .log-item.log-level-info {
+        color: #60A5FA; /* blue-400 */
+        border-left-color: #3B82F6; /* blue-500 */
+      }
+       .log-item.log-level-log {
+        color: #9CA3AF; /* gray-400 */
+        border-left-color: #6B7280; /* gray-500 */
+      }
+       .log-item.log-level-debug {
+        color: #A78BFA; /* violet-400 */
+        border-left-color: #8B5CF6; /* violet-500 */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@/": "./",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/client": "https://esm.sh/react-dom@^19.1.0/client",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "@google/genai": "https://esm.sh/@google/genai?bundle",
+    "@monaco-editor/react": "https://esm.sh/@monaco-editor/react@^4.6.0",
+    "monaco-editor/": "https://esm.sh/monaco-editor@^0.47.0/",
+    "prismjs/components/prism-core": "https://esm.sh/prismjs@1.29.0/components/prism-core",
+    "prismjs/components/prism-clike": "https://esm.sh/prismjs@1.29.0/components/prism-clike",
+    "prismjs/components/prism-javascript": "https://esm.sh/prismjs@1.29.0/components/prism-javascript",
+    "prismjs/components/prism-markup": "https://esm.sh/prismjs@1.29.0/components/prism-markup",
+    "prismjs/components/prism-css": "https://esm.sh/prismjs@1.29.0/components/prism-css",
+    "prismjs/": "https://esm.sh/prismjs@^1.30.0/",
+    "react-simple-code-editor": "https://esm.sh/react-simple-code-editor@^0.14.1",
+    "monaco-editor": "https://esm.sh/monaco-editor@^0.52.2",
+    "uuid": "https://esm.sh/uuid@^9.0.1",
+    "marked": "https://esm.sh/marked@^15.0.12",
+    "jszip": "https://esm.sh/jszip@3.10.1",
+    "file-saver": "https://esm.sh/file-saver@2.0.5",
+    "express": "https://esm.sh/express@^5.1.0",
+    "cors": "https://esm.sh/cors@^2.8.5",
+    "morgan": "https://esm.sh/morgan@^1.10.0",
+    "dotenv": "https://esm.sh/dotenv@^17.0.0",
+    "sequelize": "https://esm.sh/sequelize@^6.37.7",
+    "path": "https://esm.sh/path@^0.12.7",
+    "jsonwebtoken": "https://esm.sh/jsonwebtoken@^9.0.2",
+    "bcryptjs": "https://esm.sh/bcryptjs@^3.0.2",
+    "express-validator": "https://esm.sh/express-validator@^7.2.1",
+    "url": "https://esm.sh/url@^0.11.4",
+    "crypto": "https://esm.sh/crypto@^1.0.1",
+    "zustand": "https://esm.sh/zustand@^4.5.4",
+    "zustand/": "https://esm.sh/zustand@^4.5.4/",
+    "immer": "https://esm.sh/immer@^10.1.1"
+  }
+}
+</script>
+    
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-slate-900">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
